@@ -10,5 +10,3 @@ public:
 	void copy(queue1*);
 	void merge(queue1*, queue1*);
 };
-
-void variety(queue1*);

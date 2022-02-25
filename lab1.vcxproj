@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="daughter1.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="parent.h" />
     <ClInclude Include="daughter3.h" />
     <ClInclude Include="daughter2.h" />
