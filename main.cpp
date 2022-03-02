@@ -16,6 +16,7 @@ int main()
 		<< "2 - Дочерний класс с наследованием protected" << std::endl
 		<< "3 - Дочерний класс с наследованием public" << std::endl; 
 	std::cout << "Введите цифру: "; std::cin >> choice1;
+
 	if (choice1 == 1)
 	{
 		queue1* q1 = new queue1;

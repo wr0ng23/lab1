@@ -4,6 +4,7 @@ class queue2 : protected queue
 {
 public:
 	int count_bigger_avereage() const;
+	int return_size_of_queue() const;
 	void display() const;
 	void add_item(int);
 	void pop_item();

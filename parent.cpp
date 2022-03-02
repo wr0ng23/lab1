@@ -4,68 +4,65 @@
 queue::~queue()
 {
 	Element* temp = nullptr;
-	while (last)
+	while (first)
 	{
-		temp = last->prev;
-		delete last;
-		last = temp;
+		temp = first->next;
+		delete first;
+		first = temp;
 	}
 }
 
-Element* queue::return_last() const
+int queue::return_size_of_queue() const
 {
-	return last;
+	return size;
+}
+
+bool queue::isEmpty()
+{
+	return (first == nullptr) ? true : false;
 }
 
 void queue::add_item(int d)
 {
 	Element* newElement = new Element;
 	newElement->data = d;
-	newElement->prev = last;
+	newElement->next = nullptr;
+	if (isEmpty())
+		first = newElement;
+	else
+		last->next = newElement;
 	last = newElement;
 	size++;
 }
 
 void queue::pop_item()
 {
-	Element* current = last;
-	while (current)
-	{
-		if (current->prev == nullptr)
-		{
-			std::cout << "Извлечен элемент: " << current->data << std::endl;
-			delete current;
-			last = nullptr;
-			size--;
-			return;
-		}
-		if (current->prev->prev == nullptr)
-		{
-			std::cout << "Извлечен элемент: " << current->prev->data << std::endl;
-			delete current->prev;
-			current->prev = nullptr;
-			size--;
-			return;
-		}
-		current = current->prev;
-	}
-	std::cout << "Нет элементов!" << std::endl;
+	if (first == nullptr)
+		throw std::string("Попытка извлечения из пустой очереди!");
+	int temp = first->data;
+	Element* temp_element = first->next;
+	if (first->next == nullptr)
+		last = nullptr;
+	delete first;
+	first = temp_element;
+	std::cout << "Извлечен элемент : " << temp << std::endl;
+	size--;
 }
 
 void queue::copy(queue* q2)
 {
-	Element* temp = q2->last;
+	Element* temp = q2->first;
 	int* arr = new int[q2->size] {};
-	int n = 0;
+	size_t n = 0;
 	while (temp)
 	{
 		arr[n] = temp->data;
 		n++;
-		temp = temp->prev;
+		temp = temp->next;
 	}
-	for (n--; n >= 0; n--)
+	for (size_t i = 0; i < n; i++)
 	{
-		add_item(arr[n]);
+		add_item(arr[i]);
 	}
 	delete[] arr;
 }
@@ -73,52 +70,41 @@ void queue::copy(queue* q2)
 void queue::display() const
 {
 	if (size == 0)
-	{
-		std::cout << "Нет элементов!" << std::endl;
-		return;
-	}
-	Element* current = last;
-	int* arr = new int[size];
-	int n = 0;
+		throw(std::string("В очереди нет элементов!"));
+	Element* current = first;
 	while (current)
 	{
-		arr[n] = current->data;
-		n++;
-		current = current->prev;
+		std::cout << current->data << std::endl;
+		current = current->next;
 	}
-	for (n--; n >= 0; n--)
-	{
-		std::cout << arr[n] << std::endl;
-	}
-	delete[] arr;
 }
 
 void queue::merge(queue* q1, queue* q2)
 {
-	Element* temp = q1->return_last();
-	Element* temp1 = q2->return_last();
-	int* arr = new int[q1->size];
-	int* arr1 = new int[q2->size];
-	int n = 0;
+	Element* temp = q1->first;
+	Element* temp1 = q2->first;
+	int* arr1 = new int[q1->size];
+	int* arr2 = new int[q2->size];
+	size_t n = 0;
 	while (temp)
 	{
-		arr[n] = temp->data;
+		arr1[n] = temp->data;
 		n++;
-		temp = temp->prev;
+		temp = temp->next;
 	}
-	for (n--; n >= 0; n--)
-		this->add_item(arr[n]);
+	for (size_t i = 0; i < n; i++)
+		this->add_item(arr1[i]);
 
 	n = 0;
 	while (temp1)
 	{
-		arr1[n] = temp1->data;
+		arr2[n] = temp1->data;
 		n++;
-		temp1 = temp1->prev;
+		temp1 = temp1->next;
 	}
-	for (n--; n >= 0; n--)
-		this->add_item(arr1[n]);
+	for (size_t i = 0; i < n; i++)
+		this->add_item(arr2[i]);
 
-	delete[] arr;
 	delete[] arr1;
+	delete[] arr2;
 }

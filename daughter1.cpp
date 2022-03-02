@@ -3,28 +3,31 @@
 
 int queue1::count_bigger_avereage() const
 {
-	Element* temp = queue::return_last();
+	Element* temp = this->first;
 	if (temp == nullptr)
-	{
-		std::cout << "Нет элементов!";
-		return 0;
-	}
+		throw std::string("Нет элементов в очереди!");
+
 	int count = 0;
 	while(temp)
 	{
 		count += temp->data;
-		temp = temp->prev;
+		temp = temp->next;
 	}
 	int average = count / size;
 	int number_bigger_average = 0;
-	temp = queue::return_last();
+	temp = this->first;
 	while (temp)
 	{
 		if (temp->data > average)
 			number_bigger_average++;
-		temp = temp->prev;
+		temp = temp->next;
 	}
 	return number_bigger_average;
+}
+
+int queue1::return_size_of_queue() const
+{
+	return size;
 }
 
 void queue1::display() const
@@ -44,48 +47,48 @@ void queue1::pop_item()
 
 void queue1::copy(queue1* q2)
 {
-	Element* temp = q2->return_last();
-	int* arr = new int[q2->size] {};
-	int n = 0;
+	Element* temp = q2->first;
+	int* arr = new int[q2->size]{};
+	size_t n = 0;
 	while (temp)
 	{
 		arr[n] = temp->data;
 		n++;
-		temp = temp->prev;
+		temp = temp->next;
 	}
-	for (n--; n >= 0; n--)
+	for (size_t i = 0; i < n; i++)
 	{
-		add_item(arr[n]);
+		add_item(arr[i]);
 	}
 	delete[] arr;
 }
 
 void queue1::merge(queue1* q1, queue1* q2)
 {
-	Element* temp = q1->return_last();
-	Element* temp1 = q2->return_last();
-	int* arr = new int[q1->size];
-	int* arr1 = new int[q2->size];
-	int n = 0;
+	Element* temp = q1->first;
+	Element* temp1 = q2->first;
+	int* arr1 = new int[q1->size];
+	int* arr2 = new int[q2->size];
+	size_t n = 0;
 	while (temp)
 	{
-		arr[n] = temp->data;
+		arr1[n] = temp->data;
 		n++;
-		temp = temp->prev;
+		temp = temp->next;
 	}
-	for (n--; n >= 0; n--)
-		this->add_item(arr[n]);
+	for (size_t i = 0; i < n; i++)
+		this->add_item(arr1[i]);
 
 	n = 0;
 	while (temp1)
 	{
-		arr1[n] = temp1->data;
+		arr2[n] = temp1->data;
 		n++;
-		temp1 = temp1->prev;
+		temp1 = temp1->next;
 	}
-	for (n--; n >= 0; n--)
-		this->add_item(arr1[n]);
+	for (size_t i = 0; i < n; i++)
+		this->add_item(arr2[i]);
 
-	delete[] arr;
 	delete[] arr1;
+	delete[] arr2;
 }

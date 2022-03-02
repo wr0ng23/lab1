@@ -2,26 +2,24 @@
 
 int queue3::count_bigger_avereage() const
 {
-	Element* temp = queue::return_last();
+	Element* temp = this->first;
 	if (temp == nullptr)
-	{
-		std::cout << "Нет элементов!";
-		return 0;
-	}
+		throw std::string("Нет элементов в очереди!");
+
 	int count = 0;
 	while (temp)
 	{
 		count += temp->data;
-		temp = temp->prev;
+		temp = temp->next;
 	}
 	int average = count / size;
 	int number_bigger_average = 0;
-	temp = queue::return_last();
+	temp = this->first;
 	while (temp)
 	{
 		if (temp->data > average)
 			number_bigger_average++;
-		temp = temp->prev;
+		temp = temp->next;
 	}
 	return number_bigger_average;
 }
