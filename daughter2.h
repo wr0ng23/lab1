@@ -1,4 +1,6 @@
+#pragma once
 #include "parent.h"
+#include <string>
 
 class queue2 : protected queue
 {

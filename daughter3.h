@@ -1,5 +1,6 @@
-#include <iostream>
+#pragma once
 #include "parent.h"
+#include <string>
 
 class queue3 : public queue
 {

@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+
 struct Element
 {
 	int data;

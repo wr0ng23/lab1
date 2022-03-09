@@ -1,11 +1,12 @@
 #include "daughter1.h"
-#include <iostream>
 
 int queue1::count_bigger_avereage() const
 {
 	Element* temp = this->first;
 	if (temp == nullptr)
-		throw std::string("Нет элементов в очереди!");
+	{
+		throw std::string("Нет элементов в очереди!\n");
+	}
 
 	int count = 0;
 	while(temp)

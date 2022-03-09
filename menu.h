@@ -1,4 +1,8 @@
 #pragma once
+#include "safe_input.h"
+#include "daughter1.h"
+#include "daughter2.h"
+#include "daughter3.h"
 
 template <typename queue_template>
 void menu(queue_template* q1)
@@ -12,35 +16,40 @@ void menu(queue_template* q1)
 	{
 		try
 		{
-			cout << "1 Ц ƒобавление элемента очереди" << endl
-				<< "2 Ц »звлечение элемента очереди" << endl
-				<< "3 Ц ¬ывод очереди на экран" << endl
-				<< "4 Ц  оличество элементов очереди больших, "
-				<< "среднего арифметического" << endl
-				<< "5 Ц —оздание копии очереди" << endl
-				<< "6 Ц —ли€ние двух очередей" << endl
-				<< "7 Ц ¬ыход из программы" << endl;
-			cout << "¬ведите цифру: "; cin >> choice;
+			cout << "1 Ц ƒобавление элемента очереди\n"
+				<< "2 Ц »звлечение элемента очереди\n"
+				<< "3 Ц ¬ывод очереди на экран\n"
+				<< "4 Ц  оличество элементов очереди больших "
+				<< "среднего арифметического\n"
+				<< "5 Ц —оздание копии очереди\n"
+				<< "6 Ц —ли€ние двух очередей\n" 
+				<< "7 Ц ¬ыход из программы\n";
+			choice = input<int>();
+
 			switch (choice)
 			{
 			case 1:
+			{
 				system("cls");
-				int var;
-				cout << "¬ведите добавл€емый элемент: "; cin >> var;
+				cout << "¬ведите добавл€емый элемент\n";
+				int var = input<int>();
 				q1->add_item(var);
+				system("cls");
+				cout << "Ёлемент " << var << " успешно добавлен в очередь.\n\n";
 				system("pause");
 				system("cls");
 				break;
+			}
 			case 2:
 				system("cls");
-				q1->pop_item();
+				q1->pop_item(); cout << endl;
 				system("pause");
 				system("cls");
 				break;
 			case 3:
 				system("cls");
 				cout << "Ёлементы текущей очереди:" << endl;
-				q1->display();
+				q1->display(); cout << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -60,11 +69,13 @@ void menu(queue_template* q1)
 					copy1->copy(q1);
 					cout << "ќчередь скопирована в другой объект этого класса." << endl
 						<< "Ёлементы скопированной очереди:" << endl;
-					copy1->display();
+					copy1->display(); cout << endl;
 					delete copy1;
 				}
-				else 
-					throw(std::string("¬ используемой очереди нет элементов, дл€ копировани€ в другую очередь!"));
+				else
+				{
+					throw(std::string("¬ используемой очереди нет элементов, дл€ копировани€ в другую очередь!\n"));
+				}
 				system("pause");
 				system("cls");
 				break;
@@ -80,12 +91,12 @@ void menu(queue_template* q1)
 					queue_template* res = new queue_template;
 					do
 					{
-						cout << "¬ведите несколько элементов дл€ добавлени€ во 2 очередь,\n"
-							<< "с которой будет произведено сли€ние: ";
-						cin >> d;
+						cout << "¬ведите несколько элементов дл€ добавлени€ во 2 очередь, "
+							<< "с которой будет произведено сли€ние\n";
+						d = input<int>();
 						temp->add_item(d);
-						cout << "∆елаете продолжить?(дл€ выхода введите - н): "; cin >> c;
-						cout << endl;
+						cout << "∆елаете продолжить?(дл€ выхода введите - н)\n"; 
+						c = input<char>(); cout << endl;
 					} while (c != 'н');
 
 					system("cls");
@@ -95,12 +106,14 @@ void menu(queue_template* q1)
 					temp->display(); cout << endl;
 					res->merge(q1, temp);
 					cout << "Ёто элементы 3 очереди, после смешивани€ 1 и 2 очередей: " << endl;
-					res->display();
+					res->display(); cout << endl;
 					delete res;
 					delete temp;
 				}
 				else
-					throw(std::string("¬ используемой очереди нет элементов, дл€ сли€ни€ с другой очередью!"));
+				{
+					throw(std::string("¬ используемой очереди нет элементов, дл€ сли€ни€ с другой очередью!\n"));
+				}
 				system("pause");
 				system("cls");
 				break;

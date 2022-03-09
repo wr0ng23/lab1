@@ -1,4 +1,3 @@
-#include <iostream>
 #include "parent.h"
 
 queue::~queue()
@@ -38,7 +37,9 @@ void queue::add_item(int d)
 void queue::pop_item()
 {
 	if (first == nullptr)
-		throw std::string("Попытка извлечения из пустой очереди!");
+	{
+		throw std::string("Попытка извлечения из пустой очереди!\n");
+	}
 	int temp = first->data;
 	Element* temp_element = first->next;
 	if (first->next == nullptr)
@@ -70,7 +71,9 @@ void queue::copy(queue* q2)
 void queue::display() const
 {
 	if (size == 0)
-		throw(std::string("В очереди нет элементов!"));
+	{
+		throw(std::string("В очереди нет элементов!\n"));
+	}
 	Element* current = first;
 	while (current)
 	{
